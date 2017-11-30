@@ -1,5 +1,6 @@
 
 #include "frontier.h" 
+#include <iostream>
 
 int main()  {
     Frontier io;
@@ -11,9 +12,6 @@ int main()  {
         io.turn();
         io.printFrontier();
         ++i;
-        if (i == 20)    { // if you index out of range of the entire blocks[][], then the compiler kills the prog
-            break;
-        }
     }
     return 0;
 }
