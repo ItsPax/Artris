@@ -125,7 +125,7 @@ uint16_t charToColour(char c) {
 
 void drawSingleBlock(char c, int x, int y) {
 	int blockX = x*BLOCK_SIZE;
-	int blockY = DISPLAY_HEIGHT-(BOARD_HEIGHT+1-y)*BLOCK_SIZE;
+	int blockY = DISPLAY_HEIGHT-(BOARD_HEIGHT-y)*BLOCK_SIZE;
 	uint16_t colour;
 	colour = charToColour(c);
 	tft.fillRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, colour);

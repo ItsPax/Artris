@@ -1,7 +1,7 @@
 #ifndef FRONTIER_H
 
-const int WIDTH = 10;
-const int HEIGHT = 13;
+const int WIDTH = 12;
+const int HEIGHT = 15;
 const int TIME_TO_WAIT = 5; // units are in tenths of a second
 const int NUM_BLOCKS = 7;
 

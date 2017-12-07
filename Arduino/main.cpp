@@ -77,7 +77,7 @@ int main()  {
     // handles game mechanics
     while(true)	{
       input = buttonInput();
-      delay(100);
+      //delay(100);
 	    io.turn(input);
 	    io.printFrontier();
     }
