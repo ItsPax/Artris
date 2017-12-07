@@ -1,5 +1,8 @@
 #include <Arduino.h>
 #include "frontier.h"
+#include "drawing.h"
+// #include <Adafruit_GFX.h>
+// #include <Adafruit_ILI9341.h>
 //#include <iostream>
 
 // // joystick pins
@@ -11,46 +14,7 @@
 // #define JOY_DEADZONE 64
 // #define JOY_CENTER 512
 
-int turnButton = 2;
-int leftButton = 12;
-int rightButton = 13;
-int dropButton = 8;
 
-int turn;
-int left;
-int right;
-int drop;
-
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
-unsigned long time;
-
-char buttonInput() {
-	time = millis();
-	while (true) {
-		turn = digitalRead(turnButton);
-		left = digitalRead(leftButton);
-		right = digitalRead(rightButton);
-		drop = digitalRead(dropButton);
-
-
-		if (turn == LOW) {
-			return 'q';
-		}
-		else if (left == LOW) {
-			return 'a';
-		}
-		else if (right == LOW) {
-			return 'd';
-		}
-		else if (drop == LOW) {
-			return ' ';
-		}
-
-		if ((millis()-time) > 350) {
-			return 'n';
-		}
-	}
-}
 
 // char joyInput() {
 //   int xVal = analogRead(JOY_HORIZ);
@@ -80,22 +44,22 @@ char buttonInput() {
 //
 // }
 
-void setup() {
-  init();
-	pinMode(JOY_SEL, INPUT_PULLUP);
-	Serial.begin(9600);
-	tft.begin();
-  tft.fillScreen(ILI9341_BLACK);
-
-  pinMode(turnButton, INPUT);
-	pinMode(leftButton, INPUT);
-	pinMode(rightButton, INPUT);
-	pinMode(dropButton, INPUT);
-	digitalWrite(turnButton, HIGH);
-	digitalWrite(leftButton, HIGH);
-	digitalWrite(rightButton, HIGH);
-	digitalWrite(dropButton, HIGH);
-}
+// void setup() {
+//   init();
+// 	//pinMode(JOY_SEL, INPUT_PULLUP);
+// 	Serial.begin(9600);
+// 	tft.begin();
+//   tft.fillScreen(ILI9341_BLACK);
+//
+//   pinMode(turnButton, INPUT);
+// 	pinMode(leftButton, INPUT);
+// 	pinMode(rightButton, INPUT);
+// 	pinMode(dropButton, INPUT);
+// 	digitalWrite(turnButton, HIGH);
+// 	digitalWrite(leftButton, HIGH);
+// 	digitalWrite(rightButton, HIGH);
+// 	digitalWrite(dropButton, HIGH);
+// }
 
 int main()  {
     setup();
@@ -113,7 +77,7 @@ int main()  {
     // handles game mechanics
     while(true)	{
       input = buttonInput();
-      delay(150);
+      delay(100);
 	    io.turn(input);
 	    io.printFrontier();
     }

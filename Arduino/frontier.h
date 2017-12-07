@@ -5,7 +5,7 @@ const int HEIGHT = 13;
 const int TIME_TO_WAIT = 5; // units are in tenths of a second
 const int NUM_BLOCKS = 7;
 
-#include <vector>
+#include "vector.h"
 
 #define FRONTIER_H
 
@@ -23,7 +23,7 @@ public:
     int whichBlock;
     int score;
     int highScore;
-    std::vector<int> blockVec;
+    vector blockVec;
     bool paused;
     int currentBlock;
     int storedBlock;

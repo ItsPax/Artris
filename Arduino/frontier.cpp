@@ -1,8 +1,8 @@
 #include <Arduino.h>
 //#include <iostream>
 //#include <ncurses.h> // for handling input, arduino.h will provide similar functionality (I'm making sure of that)
-#include <cstdlib> // for rand()
-#include <vector>
+//#include <cstdlib> // for rand()
+#include "vector.h"
 
 #include "drawing.h"
 #include "frontier.h"
@@ -164,8 +164,8 @@ void Frontier::generateGhost()	{
 				}
 			}
 		}
-		vector<int> xToFill;
-		vector<int> yToFill;
+		vector xToFill;
+		vector yToFill;
 		for (int i = 0; i < WIDTH; ++i)	{
 			for (int j = 0; j < HEIGHT; ++j)	{
 				if (ghostGrid[i][j])	{
@@ -188,9 +188,9 @@ void Frontier::generateGhost()	{
 
 void Frontier::moveToGhost()	{
 	generateGhost();
-	cout << "got here!\n";
+	//cout << "got here!\n";
 	char temp;
-	vector<int> newX,newY;
+	vector newX,newY;
 	for (int i = 0; i < WIDTH; ++i)	{
 		for (int j = 0; j < HEIGHT; ++j)	{
 			if (isAlive[i][j])	{
@@ -272,8 +272,8 @@ void Frontier::checkRotationAndRotateAllAlive()	{
 	}
 	// now, assuming that the rotation is true:
 	if (shouldRotate)	{
-			vector<int> xToUnpack;
-			vector<int> yToUnpack;
+			vector xToUnpack;
+			vector yToUnpack;
 			for (int i = 0; i < WIDTH; ++i)	{
 				for (int j = 0; j < HEIGHT; ++j)	{
 					if (isAlive[i][j])  {
@@ -302,12 +302,12 @@ void Frontier::checkRotationAndRotateAllAlive()	{
 
 void Frontier::initializeGame()	{ // handles initialization of game
 	score = 0;
-	blockVec.push_back(rand()%NUM_BLOCKS);
+	blockVec.push_back(random(101)%NUM_BLOCKS);
 	//score = 0;
 	storedBlock = -1; // no block stored
 	paused = false;
 	swapAvailable = true;
-	whichBlock = rand()%NUM_BLOCKS;
+	whichBlock = random(101)%NUM_BLOCKS;
 	// print the game instructions then wait for the user to input enter once he's read the instructions
 	// NOTE cout removal
 	/*
@@ -327,7 +327,7 @@ void Frontier::spawnBlock()	{
 	if (whichBlock == -1)	{
 		whichBlock = blockVec.back();
 		blockVec.pop_back();
-		blockVec.push_back(rand()%NUM_BLOCKS);
+		blockVec.push_back(random(101)%NUM_BLOCKS);
 		swapAvailable = true;
 	}
 	// NOTE TO MAX:
@@ -455,7 +455,7 @@ void Frontier::spawnBlock()	{
 bool Frontier::checkGameOver()	{
 	for (int i = 3; i < 8; ++i)	{
 		if (blocks[i][0] != '.' && !isAlive[i][0])	{
-			cout << "GAME OVER!\n\n\n";
+			//cout << "GAME OVER!\n\n\n";
 			return true;
 		}
 	}
@@ -678,17 +678,17 @@ void Frontier::turn(char input)	{
 
 	// before anything, lets check to see if the game is paused
 	if (paused)	{
-		cout << "The game is paused!\n";
+		//cout << "The game is paused!\n";
 		if (currentMove == 'p')	{
 			paused = !paused;
-			cout << "Unpausing the game!\n";
+			//cout << "Unpausing the game!\n";
 		}
 		return;
 	}
 
 	if (currentMove == 'p')	{
 		paused = !paused;
-		cout << "Pausing the game!\n";
+		//cout << "Pausing the game!\n";
 	}
 
 	if (currentMove == 'e' && swapAvailable)	{ //the player has issued a command to swap

@@ -12,12 +12,64 @@
 #define TFT_CS 10
 #define SD_CS 6
 
-// width/height of the display
-#define DISPLAY_WIDTH  240
-#define DISPLAY_HEIGHT 320
-#define BLOCK_SIZE 24
-#define BOARD_WIDTH 10
-#define BOARD_HEIGHT 12
+Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
+
+int turnButton = 2;
+int leftButton = 12;
+int rightButton = 13;
+int dropButton = 8;
+
+int turn;
+int left;
+int right;
+int drop;
+
+void setup() {
+  init();
+	//pinMode(JOY_SEL, INPUT_PULLUP);
+	Serial.begin(9600);
+	tft.begin();
+  tft.fillScreen(ILI9341_BLACK);
+
+  pinMode(turnButton, INPUT);
+	pinMode(leftButton, INPUT);
+	pinMode(rightButton, INPUT);
+	pinMode(dropButton, INPUT);
+	digitalWrite(turnButton, HIGH);
+	digitalWrite(leftButton, HIGH);
+	digitalWrite(rightButton, HIGH);
+	digitalWrite(dropButton, HIGH);
+}
+
+unsigned long time;
+
+char buttonInput() {
+	time = millis();
+	while (true) {
+		turn = digitalRead(turnButton);
+		left = digitalRead(leftButton);
+		right = digitalRead(rightButton);
+		drop = digitalRead(dropButton);
+
+
+		if (turn == LOW) {
+			return 'q';
+		}
+		else if (left == LOW) {
+			return 'a';
+		}
+		else if (right == LOW) {
+			return 'd';
+		}
+		else if (drop == LOW) {
+			return ' ';
+		}
+
+		if ((millis()-time) > 300) {
+			return 'n';
+		}
+	}
+}
 
 uint16_t charToColour(char c) {
 	if (c == 'Y') {
@@ -44,41 +96,43 @@ uint16_t charToColour(char c) {
 	else if (c == '*') {
 		return ILI9341_BLACK;
 	}
-	else (c == '.') {
+	else {
 		return ILI9341_BLACK;
 	}
 
 }
 
-void redrawGrid(int board[BOARD_WIDTH][BOARD_HEIGHT]) {
-	int blockX = 0;
-	int blockY = DISPLAY_HEIGHT - BLOCK_SIZE;
-	uint16_t colour;
-
-	for (int i = 0; i < BOARD_HEIGHT; i++) {
-		for (int j = 0; j < BOARD_WIDTH; j++) {
-			//if (board[j][BOARD_HEIGHT-1-i] == 1) {
-			colour = charToColour(board[j][BOARD_HEIGHT-1-i]);
-			tft.fillRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, colour);
-			tft.drawRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, ILI9341_BLACK);
-			//}
-			blockX += BLOCK_SIZE;
-			if (j==BOARD_WIDTH-1) {
-				blockX = 0;
-			}
-		}
-		blockY -= BLOCK_SIZE;
-	}
-}
+// void redrawGrid(int board[BOARD_WIDTH][BOARD_HEIGHT]) {
+// 	int blockX = 0;
+// 	int blockY = DISPLAY_HEIGHT - BLOCK_SIZE;
+// 	uint16_t colour;
+//
+// 	for (int i = 0; i < BOARD_HEIGHT; i++) {
+// 		for (int j = 0; j < BOARD_WIDTH; j++) {
+// 			//if (board[j][BOARD_HEIGHT-1-i] == 1) {
+// 			colour = charToColour(board[j][BOARD_HEIGHT-1-i]);
+// 			tft.fillRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, colour);
+// 			tft.drawRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, ILI9341_BLACK);
+// 			//}
+// 			blockX += BLOCK_SIZE;
+// 			if (j==BOARD_WIDTH-1) {
+// 				blockX = 0;
+// 			}
+// 		}
+// 		blockY -= BLOCK_SIZE;
+// 	}
+// }
 
 void drawSingleBlock(char c, int x, int y) {
 	int blockX = x*BLOCK_SIZE;
-	int blockY = DISPLAY_HEIGHT-(1+y)*BLOCK_SIZE;
+	int blockY = DISPLAY_HEIGHT-(BOARD_HEIGHT+1-y)*BLOCK_SIZE;
 	uint16_t colour;
 	colour = charToColour(c);
-	tft.fillRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, ILI9341_RED);
+	tft.fillRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, colour);
 	if (c == '*') {
 		tft.drawRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, ILI9341_WHITE);
 	}
-	tft.drawRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, ILI9341_BLACK);
+	else {
+		tft.drawRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, ILI9341_BLACK);
+	}
 }
