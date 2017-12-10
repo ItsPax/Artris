@@ -80,6 +80,7 @@ int main()  {
       //delay(100);
 	    io.turn(input);
 	    io.printFrontier();
+      
     }
     return 0;
 }

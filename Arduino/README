@@ -1,0 +1,25 @@
+Class: CMPUT274
+Student Names: Zhijie Shen, Alex Sieusahai
+Student ID: 1494084, 1495197
+
+Accessories:
+*4x push button
+*Arduino MegaBoard
+*Arduino TouchScreen display
+
+Wiring Instructions:
+*standard wiring for the touchscreen display
+*GND <-> pushButton (left) <-> Arduino pin 12
+*GND <-> pushButton (right) <-> Arduino pin 13
+*GND <-> pushButton (top) <-> Arduino pin 2
+*GND <-> pushButton (bottom) <-> Arduino pin 8
+
+Compiling Instructions:
+*type "make upload" into linux terminal while inside the directory Arduino_Tetris
+ with the arduino connected to the vm
+
+Functionality:
+*the is a version of tetris on Arduino
+*the left and right pushbuttons are used to move the falling block right and left
+*the top button is used to rotate the falling block
+*the bottom button is used to drop the block to the designated locations

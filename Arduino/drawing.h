@@ -14,5 +14,6 @@ void redrawGrid(int board[BOARD_WIDTH][BOARD_HEIGHT]);
 void drawSingleBlock(char c, int x, int y);
 char buttonInput();
 void setup();
+void printScore(int score);
 
 #endif

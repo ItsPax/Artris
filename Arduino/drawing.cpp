@@ -30,6 +30,10 @@ void setup() {
 	Serial.begin(9600);
 	tft.begin();
   tft.fillScreen(ILI9341_BLACK);
+  tft.setCursor(0,0);
+  tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
+  tft.setTextSize(2);
+  tft.print("Score: ");
 
   pinMode(turnButton, INPUT);
 	pinMode(leftButton, INPUT);
@@ -135,4 +139,10 @@ void drawSingleBlock(char c, int x, int y) {
 	else {
 		tft.drawRect(blockX, blockY, BLOCK_SIZE, BLOCK_SIZE, ILI9341_BLACK);
 	}
+}
+
+void printScore(int score) {
+  tft.setCursor(80,0);
+  tft.print(score);
+  tft.print("     ");
 }

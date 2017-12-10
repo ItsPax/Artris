@@ -100,6 +100,7 @@ void Frontier::printFrontier()	{
 	}
 	//cout << '\n'; // so the frontiers printed one after the other have a line between them
 	//cout << flush;
+	printScore(score);
 	resetGhostGrid();
 }
 
